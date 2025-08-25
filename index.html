@@ -80,7 +80,15 @@ html, body {
 </style>
 </head>
 <body>
+
 <div class="matrix-hearts-bg" id="matrixHeartsBg"></div>
+
+<!-- Music Player -->
+<div id="musicPlayer" style="position:fixed; bottom:24px; right:24px; z-index:2000; background:rgba(255,255,255,0.85); border-radius:16px; box-shadow:0 4px 16px rgba(255,77,109,0.18); padding:10px 18px; display:flex; align-items:center; gap:12px;">
+  <button id="musicToggle" class="btn" style="background:var(--accent-2); color:white; font-size:18px; padding:8px 16px; min-width:40px;">⏸</button>
+  <span id="musicStatus" style="font-size:15px; color:var(--accent); font-weight:600;">Music Playing...</span>
+  <audio id="birthdayMusic" src="assets/music.mp3" autoplay loop></audio>
+</div>
 
 <main class="container" id="top">
   <section class="card">
@@ -208,6 +216,35 @@ function typeWriter(text, i = 0) {
     setTimeout(() => typeWriter(text, i + 1), 40);
   }
 }
+
+// Music player logic
+const music = document.getElementById('birthdayMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicStatus = document.getElementById('musicStatus');
+let isPlaying = true;
+
+// Ensure autoplay works after user interaction (for browsers that block autoplay)
+document.body.addEventListener('click', () => {
+  if (music.paused) {
+    music.play();
+    isPlaying = true;
+    musicToggle.textContent = '⏸';
+    musicStatus.textContent = 'Music Playing...';
+  }
+}, { once: true });
+
+musicToggle.addEventListener('click', () => {
+  if (isPlaying) {
+    music.pause();
+    musicToggle.textContent = '▶️';
+    musicStatus.textContent = 'Music Paused';
+  } else {
+    music.play();
+    musicToggle.textContent = '⏸';
+    musicStatus.textContent = 'Music Playing...';
+  }
+  isPlaying = !isPlaying;
+});
 </script>
 </body>
 </html>
