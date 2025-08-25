@@ -16,7 +16,7 @@ html, body {
   margin: 0;
   font-family: system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
   color: var(--text);
-  background: url('assets/her1.png') center center/cover no-repeat fixed, #fff;
+  background: url('assets/her1.png')  center/cover no-repeat fixed, #fff;
   overflow-x: hidden;
 }
 
@@ -81,6 +81,7 @@ html, body {
 </head>
 <body>
 <div class="matrix-hearts-bg" id="matrixHeartsBg"></div>
+
 <main class="container" id="top">
   <section class="card">
     <div class="pill">🎂 29 August • Birthday Surprise</div>
@@ -88,7 +89,7 @@ html, body {
     <p class="subtitle">Today I celebrate <span style="color: red; font-style: italic; font-weight: 900;">YOU</span> - your smile, your kindness, and the way you light up my world. 💖</p>
     <div class="hero">
       <div class="photo-wrap">
-        <img id="hero-photo" src="assets/her1.png" alt="Her beautiful photo" onerror="this.closest('.photo-wrap').style.display='none'" />
+        <img id="hero-photo" src="assets/her11.png" alt="Her beautiful photo" onerror="this.closest('.photo-wrap').style.display='none'" />
       </div>
       <div>
         <p style="max-width:40ch;margin:0 auto 16px;font-size:18px;opacity:.85">I made something special just for you. Tap the button and let the magic begin ✨</p>
@@ -96,8 +97,12 @@ html, body {
       </div>
     </div>
   </section>
+</main>
 
-  <section class="gallery-section" id="gallery" style="display:none;">
+<!-- Gallery Modal -->
+<div class="modal" id="galleryModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); justify-content:center; align-items:center;">
+  <div class="gallery-section" style="box-shadow:0 16px 40px rgba(0,0,0,0.18); position:relative;">
+    <button class="btn" id="closeGalleryBtn" style="position:absolute; top:18px; right:18px; background: transparent; color: red;" >✖</button>
     <h2 id="smileyHeading" style="margin:10px 0 20px;font-size:28px;color:var(--accent-2)">Tap the <span style="color: #ff4d6d;">Pink</span> lid</h2>
     <div class="eacard" id="earpodCase">
       <div class="earpod-lid" id="earpodLid"></div>
@@ -107,12 +112,16 @@ html, body {
       </div>
     </div>
     <button class="btn" id="loveLetterBtn" style="margin-top:20px">💌 Reveal The Last Surprise</button>
-  </section>
+  </div>
+</div>
 
-  <section class="love-section" id="loveLetter">
+<!-- Love Letter Modal -->
+<div class="modal" id="loveModal" style="display:none; position:fixed; z-index:1001; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); justify-content:center; align-items:center;">
+  <div class="love-section" style="display:block; box-shadow:0 16px 40px rgba(0,0,0,0.18); position:relative;">
+    <button class="btn" id="closeLoveBtn" style="position:absolute; top:18px; right:18px; background:transparent; color: red;">✖</button>
     <div class="love-text" id="loveText"></div>
-  </section>
-</main>
+  </div>
+</div>
 
 <script>
 // Name cycle
@@ -152,34 +161,53 @@ function spawnHeart(colIdx){
 }
 for(let i=0;i<columns;i++){setInterval(()=>spawnHeart(i),random(1200,2200));}
 
-// Open surprise
-document.getElementById('openSurpriseBtn').addEventListener('click',()=>{
-  const gallery=document.getElementById('gallery');
-  gallery.style.display='flex';
-  document.getElementById('openSurpriseBtn').disabled=true;
-  document.getElementById('openSurpriseBtn').textContent='✨ Enjoy your surprise ✨';
-  setTimeout(()=>gallery.scrollIntoView({behavior:'smooth'}),200);
+
+// Modal logic
+const galleryModal = document.getElementById('galleryModal');
+const loveModal = document.getElementById('loveModal');
+const openSurpriseBtn = document.getElementById('openSurpriseBtn');
+const closeGalleryBtn = document.getElementById('closeGalleryBtn');
+const loveBtn = document.getElementById('loveLetterBtn');
+const closeLoveBtn = document.getElementById('closeLoveBtn');
+const loveText = document.getElementById('loveText');
+const letterContent = `Happy Birthday to the brightest star in my universe! \nYou light up my world and make every moment magical. \n\nI love you beyond words, and today is just a reminder of how special you are.\n\nForever yours,\n❤ Your Love`;
+
+// Open gallery modal
+openSurpriseBtn.addEventListener('click', () => {
+  galleryModal.style.display = 'flex';
+  openSurpriseBtn.textContent = '✨ Enjoy your surprise ✨';
 });
 
-// Love Letter
-const loveBtn=document.getElementById('loveLetterBtn');
-const loveLetter=document.getElementById('loveLetter');
-const loveText=document.getElementById('loveText');
-const letterContent=`💖,
-
-Happy Birthday to the brightest star in my universe! 
-You light up my world and make every moment magical. 
-
-I love you beyond words, and today is just a reminder of how special you are.
-
-Forever yours,
-❤️ Your Love`;
-function typeWriter(text,i=0){if(i<text.length){loveText.textContent+=text.charAt(i); setTimeout(()=>typeWriter(text,i+1),40);}}
-loveBtn.addEventListener('click',()=>{
-  loveLetter.style.display='block'; loveText.textContent=''; typeWriter(letterContent);
-  loveBtn.disabled=true; loveBtn.textContent='💌 Revealed!';
-  setTimeout(()=>loveLetter.scrollIntoView({behavior:'smooth'}),200);
+// Close gallery modal
+closeGalleryBtn.addEventListener('click', () => {
+  galleryModal.style.display = 'none';
+  openSurpriseBtn.textContent = '🎁 Click for your surprise';
 });
+
+// Open love modal from gallery
+loveBtn.addEventListener('click', () => {
+  galleryModal.style.display = 'none';
+  loveModal.style.display = 'flex';
+  loveText.textContent = '';
+  typeWriter(letterContent);
+  loveBtn.disabled = true;
+  loveBtn.textContent = '💌 Revealed!';
+});
+
+// Close love modal and reset button
+closeLoveBtn.addEventListener('click', () => {
+  loveModal.style.display = 'none';
+  loveBtn.disabled = false;
+  loveBtn.textContent = '💌 Reveal The Last Surprise';
+});
+
+// Typewriter effect
+function typeWriter(text, i = 0) {
+  if (i < text.length) {
+    loveText.textContent += text.charAt(i);
+    setTimeout(() => typeWriter(text, i + 1), 40);
+  }
+}
 </script>
 </body>
 </html>
