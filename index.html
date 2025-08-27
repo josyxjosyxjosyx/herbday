@@ -1,9 +1,254 @@
+<!doctype html>
+<html lang="en">
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Happy Birthday, Smaller ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Satisfy&family=Caveat&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#ff4d6d;
+  --accent-2:#8a4fff;
+  --text:#2a2a2a;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+  color: var(--text);
+  background: url('assets/her1.png')  center/cover no-repeat fixed, #fff;
+  overflow-x: hidden;
+}
+
+/* Matrix hearts */
+.matrix-hearts-bg{
+  position:fixed; top:0; left:0; width:100vw; height:100vh;
+  pointer-events:none; z-index:0;
+  background:transparent;
+}
+.matrix-heart{position:absolute; font-size:28px; opacity:0.85; animation:heartFall linear forwards; will-change:transform,opacity; filter:drop-shadow(0 2px 6px #ff4d6d);}
+@keyframes heartFall {0%{transform:translateY(-40px) scale(1); opacity:0.85;}80%{opacity:0.9;}100%{transform:translateY(100vh) scale(1.2); opacity:0;}}
+
+.container{min-height:100dvh; display:grid; place-items:center; padding:clamp(16px,4vw,48px); position:relative; isolation:isolate;}
+.card{width:min(900px,96vw); background:transparent; color:#000; border: solid rgb(255, 255, 255); box-shadow:0 20px 60px rgba(255,77,109,0.15); border-radius:28px; padding:clamp(20px,6vw,56px); text-align:center;}
+.title{font-size:clamp(28px,5vw,56px); line-height:1.1; margin:0 0 10px;}
+.subtitle{font-size:clamp(16px,2.4vw,22px); opacity:0.9; margin:0 0 22px;}
+.hero{display:flex; align-items:center; justify-content:center; gap:clamp(16px,3vw,28px); flex-wrap:wrap;}
+.photo-wrap{width:min(240px,60vw); aspect-ratio:1/1; border-radius:28px; overflow:hidden; position:relative; box-shadow:0 5px 50px red; border: transparent; background: transparent;}
+.photo-wrap img{width:100%; height:100%; object-fit:cover; display:block;}
+.btn{display:inline-flex;align-items:center;gap:10px;border:none;padding:14px 22px;border-radius:999px;background:linear-gradient(135deg,var(--accent),#ff7a8c);color:white;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 10px 30px rgba(255,77,109,0.35);transition:transform .15s ease, box-shadow .2s ease, filter .2s ease;}
+.btn:hover{transform:translateY(-2px); box-shadow:0 16px 36px rgba(255,77,109,0.45);}
+.btn:active{transform:translateY(0); filter:saturate(1.1);}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(138,79,255,0.12);color:#5a37c9;font-weight:600;font-size:14px;margin-bottom:10px;}
+
+/* Slide animation for name */
+#changingName{display:inline-block; transition: transform 0.45s cubic-bezier(.7,-0.5,.3,1.5), opacity 0.45s;}
+.slide-out{transform:translateY(40%) scale(0.8); opacity:0;}
+.slide-in{transform:translateY(-40%) scale(1.1); opacity:0; animation:slideInAnim 0.45s forwards;}
+@keyframes slideInAnim{0%{transform:translateY(-40%) scale(1.1); opacity:0;}100%{transform:translateY(0) scale(1); opacity:1;}}
+
+/* Gallery section */
+.gallery-section{margin-top:80px; max-width:900px; width:96%; background:transparent; border-radius:24px; padding:20px; box-shadow:0 16px 40px rgba(0,0,0,0.1); text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; position:relative;}
+
+/* Earpod */
+.eacard{position:relative; width:270px; height:220px; border-radius:70px; background:#f1f1f3; box-shadow: inset 0px 35px 25px #fff8, inset -10px 0px 20px #0002, 0 0 20px rgba(138,79,255,0.3), 0 0 40px rgba(255,77,109,0.25); transition: transform 0.3s ease, box-shadow 0.3s ease;}
+.eacard:hover{transform:translateY(-4px) scale(1.02); box-shadow: inset 0px 35px 25px #fff8, inset -10px 0px 20px #0002, 0 0 26px rgba(138,79,255,0.45), 0 0 55px rgba(255,77,109,0.35);}
+.earpod-lid{position:absolute; top:0; left:50%; transform:translateX(-50%); width:270px; height:105px; background:linear-gradient(180deg,#ff4d6d 70%,#e0e0e0 100%); border-radius:135px 135px 70px 70px/110px 110px 40px 40px; box-shadow:0 8px 24px rgba(0,0,0,0.15), inset 0 2px 6px rgba(255,255,255,0.6); transform-origin:bottom center; transition: transform 0.8s cubic-bezier(.7,-0.5,.3,1.5);}
+.earpod-lid.open{transform:rotateX(70deg) scaleY(0.8);}
+.earpod-content{position:absolute; left:50%; top:0; transform:translate(-50%,-180px) scale(0.7); width:140px; opacity:0; transition: opacity 0.5s 0.3s, transform 0.7s cubic-bezier(.7,-0.5,.3,1.5); pointer-events:none;}
+.earpod-content.open{opacity:1; transform:translate(-50%,-220px) scale(1.08);}
+.earpod-content img{width:100%; border-radius:20px; box-shadow:0 8px 22px rgba(0,0,0,0.3),0 0 16px rgba(138,79,255,0.4),0 0 26px rgba(255,77,109,0.35); transition: transform 0.4s ease;}
+.earpod-content.open img:hover{transform:scale(1.05) rotate(1deg);}
+.earpod-text{text-align:center; margin-top:10px; font-size:18px; color:#00e5ff; font-weight:bold;}
+
+/* Love Letter */
+.love-section{margin-top:80px; max-width:500px; width:100%; background:repeating-linear-gradient(to bottom,#fdf6e3 0px,#fdf6e3 28px,#e7e3d8 28px,#e7e3d8 30px), linear-gradient(white,white), #fdf6e3; border-radius:24px; padding:32px 24px; box-shadow:0 16px 40px rgba(0,0,0,0.10),0 2px 8px #fff8; text-align:center; display:none; border:2px solid rgba(255,77,109,0.25); animation:fadeInLetter 1s ease forwards;}
+.love-text{font-size:22px; line-height:30px; text-align:left; max-width:700px; margin:20px auto; white-space:pre-wrap; font-family:'Dancing Script','Pacifico','Satisfy','Caveat',cursive; color:#3a2c1a; letter-spacing:0.5px;}
+
+@keyframes fadeInLetter{from{opacity:0; transform:translateY(30px) scale(0.98);}to{opacity:1; transform:translateY(0) scale(1);}}
+
+@media(max-width:600px){
+  .gallery-section,.card{width:80vw; padding:16px;}
+  .eacard{width:50vw; height:160px;}
+  .earpod-lid{width:48vw; height:60px;}
+  .earpod-content{width:35vw; transform:translate(-50%,-160px) scale(1);}
+  .earpod-text{font-size:12px;}
+  .love-section{width:77vw; padding:24px 16px;}
+  .love-text{font-size:15px; line-height:20px; padding-bottom: 3px;}
+  .title{font-size:8vw;} .subtitle{font-size:4vw;}
+}
+</style>
     <title>Smiley</title>
 </head>
 <body>
+
+<div class="matrix-hearts-bg" id="matrixHeartsBg"></div>
+
+<!-- Music Player -->
+<div id="musicPlayer" style="position:fixed; bottom:24px; right:24px; z-index:2000; background:rgba(255,255,255,0.85); border-radius:16px; box-shadow:0 4px 16px rgba(255,77,109,0.18); padding:10px 18px; display:flex; align-items:center; gap:12px;">
+  <button id="musicToggle" class="btn" style="background:var(--accent-2); color:white; font-size:18px; padding:8px 16px; min-width:40px;">⏸</button>
+  <span id="musicStatus" style="font-size:15px; color:var(--accent); font-weight:600;">Music Playing...</span>
+  <audio id="birthdayMusic" src="assets/music.mp3" autoplay loop></audio>
+</div>
+
+<main class="container" id="top">
+  <section class="card">
+    <div class="pill">🎂 29 August • Birthday Surprise</div>
+    <h1 class="title">Happy Birthday, <span id="changingName" contenteditable="true" spellcheck="false" style="color:var(--accent)">My Love</span> </h1>
+    <p class="subtitle">Today I celebrate <span style="color: red; font-style: italic; font-weight: 900;">YOU</span> - your smile, your kindness, and the way you light up my world. 💖</p>
+    <div class="hero">
+      <div class="photo-wrap">
+        <img id="hero-photo" src="assets/her11.png" alt="Her beautiful photo" onerror="this.closest('.photo-wrap').style.display='none'" />
+      </div>
+      <div>
+        <p style="max-width:40ch;margin:0 auto 16px;font-size:18px;opacity:.85">I made something special just for you. Tap the button and let the magic begin ✨</p>
+        <button class="btn" id="openSurpriseBtn">🎁 Click for your surprise</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Gallery Modal -->
+<div class="modal" id="galleryModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); justify-content:center; align-items:center;">
+  <div class="gallery-section" style="box-shadow:0 16px 40px rgba(0,0,0,0.18); position:relative;">
+    <button class="btn" id="closeGalleryBtn" style="position:absolute; top:18px; right:18px; background: transparent; color: red;" >✖</button>
+    <h2 id="smileyHeading" style="margin:10px 0 20px;font-size:28px;color:var(--accent-2)">Tap the <span style="color: #ff4d6d;">Pink</span> lid</h2>
+    <div class="eacard" id="earpodCase">
+      <div class="earpod-lid" id="earpodLid"></div>
+      <div class="earpod-content" id="earpodContent">
+        <img src="assets/her2.png" alt="Surprise Image">
+        <div class="earpod-text">You are my music, smiley!🌟 🎶😊</div>
+      </div>
+    </div>
+    <button class="btn" id="loveLetterBtn" style="margin-top:20px">💌 Reveal The Last Surprise</button>
+  </div>
+</div>
+
+<!-- Love Letter Modal -->
+<div class="modal" id="loveModal" style="display:none; position:fixed; z-index:1001; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); justify-content:center; align-items:center;">
+  <div class="love-section" style="display:block; box-shadow:0 16px 40px rgba(0,0,0,0.18); position:relative;">
+    <button class="btn" id="closeLoveBtn" style="position:absolute; top:18px; right:18px; background:transparent; color: red;">✖</button>
+    <div class="love-text" id="loveText"></div>
+  </div>
+</div>
+
+<script>
+// Name cycle
+const nameSpan = document.getElementById('changingName');
+const names = ['Smaller 😂','Smiley 🥰','My Love ❤️']; let nameIndex = 0;
+function animateNameChange(newText){
+  nameSpan.classList.add('slide-out');
+  setTimeout(()=>{nameSpan.textContent=newText; nameSpan.classList.remove('slide-out'); nameSpan.classList.add('slide-in'); setTimeout(()=>nameSpan.classList.remove('slide-in'),450);},450);
+}
+setInterval(()=>{if(document.activeElement!==nameSpan){animateNameChange(names[nameIndex]); nameIndex=(nameIndex+1)%names.length;}},2000);
+
+// Earpod
+const earpodCase=document.getElementById('earpodCase');
+const earpodLid=document.getElementById('earpodLid');
+const earpodContent=document.getElementById('earpodContent');
+const smileyHeading=document.getElementById('smileyHeading');
+let earpodOpen=false;
+earpodCase.addEventListener('click',()=>{
+  if(!earpodOpen){earpodLid.classList.add('open'); earpodContent.classList.add('open'); if(smileyHeading) smileyHeading.style.opacity='0'; earpodOpen=true;}
+  else{earpodLid.classList.remove('open'); earpodContent.classList.remove('open'); if(smileyHeading) smileyHeading.style.opacity='1'; earpodOpen=false;}
+});
+
+// Matrix hearts
+function random(min,max){return Math.random()*(max-min)+min;}
+const heartEmojis=['❤️','💖','💗','💘','💕','💞','💝','💓','💜','💙','🧡','💚','💛'];
+const matrixBg=document.getElementById('matrixHeartsBg');
+const columns=Math.floor(window.innerWidth/32);
+function spawnHeart(colIdx){
+  const heart=document.createElement('div'); heart.className='matrix-heart';
+  heart.textContent=heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+  heart.style.left=(colIdx*32)+'px';
+  heart.style.top='-40px';
+  heart.style.color=['#ff4d6d','#ff7a8c','#8a4fff','#ffb6c1','#e75480','#ff69b4','#c71585','#ff1493','#db7093','#ff8da1','#b266b2','#ff5e62','#ff9966'][Math.floor(Math.random()*13)];
+  heart.style.animationDuration=random(6,12)+'s';
+  matrixBg.appendChild(heart);
+  setTimeout(()=>matrixBg.removeChild(heart),12000);
+}
+for(let i=0;i<columns;i++){setInterval(()=>spawnHeart(i),random(1200,2200));}
+
+
+// Modal logic
+const galleryModal = document.getElementById('galleryModal');
+const loveModal = document.getElementById('loveModal');
+const openSurpriseBtn = document.getElementById('openSurpriseBtn');
+const closeGalleryBtn = document.getElementById('closeGalleryBtn');
+const loveBtn = document.getElementById('loveLetterBtn');
+const closeLoveBtn = document.getElementById('closeLoveBtn');
+const loveText = document.getElementById('loveText');
+const letterContent = `Happy Birthday to the brightest star in my universe! \nYou light up my world and make every moment magical. \n\nI love you beyond words, and today is just a reminder of how special you are.\n\nForever yours,\n❤ Your Love`;
+
+// Open gallery modal
+openSurpriseBtn.addEventListener('click', () => {
+  galleryModal.style.display = 'flex';
+  openSurpriseBtn.textContent = '✨ Enjoy your surprise ✨';
+});
+
+// Close gallery modal
+closeGalleryBtn.addEventListener('click', () => {
+  galleryModal.style.display = 'none';
+  openSurpriseBtn.textContent = '🎁 Click for your surprise';
+});
+
+// Open love modal from gallery
+loveBtn.addEventListener('click', () => {
+  galleryModal.style.display = 'none';
+  loveModal.style.display = 'flex';
+  loveText.textContent = '';
+  typeWriter(letterContent);
+  loveBtn.disabled = true;
+  loveBtn.textContent = '💌 Revealed!';
+});
+
+// Close love modal and reset button
+closeLoveBtn.addEventListener('click', () => {
+  loveModal.style.display = 'none';
+  loveBtn.disabled = false;
+  loveBtn.textContent = '💌 Reveal The Last Surprise';
+});
+
+// Typewriter effect
+function typeWriter(text, i = 0) {
+  if (i < text.length) {
+    loveText.textContent += text.charAt(i);
+    setTimeout(() => typeWriter(text, i + 1), 40);
+  }
+}
+
+// Music player logic
+const music = document.getElementById('birthdayMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicStatus = document.getElementById('musicStatus');
+let isPlaying = true;
+
+// Ensure autoplay works after user interaction (for browsers that block autoplay)
+document.body.addEventListener('click', () => {
+  if (music.paused) {
+    music.play();
+    isPlaying = true;
+    musicToggle.textContent = '⏸';
+    musicStatus.textContent = 'Music Playing...';
+  }
+}, { once: true });
+
+musicToggle.addEventListener('click', () => {
+  if (isPlaying) {
+    music.pause();
+    musicToggle.textContent = '▶️';
+    musicStatus.textContent = 'Music Paused';
+  } else {
+    music.play();
+    musicToggle.textContent = '⏸';
+    musicStatus.textContent = 'Music Playing...';
+  }
+  isPlaying = !isPlaying;
+});
+</script>
     <audio id="music" src="path/to/music.mp3"></audio>
     <div id="earpodCase" style="width: 100px; height: 100px; background-color: pink;"></div>
     <script>
