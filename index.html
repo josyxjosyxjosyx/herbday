@@ -232,7 +232,7 @@ document.body.addEventListener('click', () => {
     music.play();
     isPlaying = true;
     musicToggle.textContent = '⏸';
-    musicStatus.textContent = 'Music Playing...';
+    musicStatus.textContent = '';
   }
 }, { once: true });
 
@@ -240,11 +240,11 @@ musicToggle.addEventListener('click', () => {
   if (isPlaying) {
     music.pause();
     musicToggle.textContent = '▶️';
-    musicStatus.textContent = 'Music Paused';
+    musicStatus.textContent = '';
   } else {
     music.play();
     musicToggle.textContent = '⏸';
-    musicStatus.textContent = 'Music Playing...';
+    musicStatus.textContent = '';
   }
   isPlaying = !isPlaying;
 });
