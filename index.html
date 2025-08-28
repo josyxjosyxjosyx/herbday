@@ -52,7 +52,7 @@ html, body {
 /* Earpod */
 .eacard{position:relative; width:270px; height:220px; border-radius:70px; background:#f1f1f3; box-shadow: inset 0px 35px 25px #fff8, inset -10px 0px 20px #0002, 0 0 20px rgba(138,79,255,0.3), 0 0 40px rgba(255,77,109,0.25); transition: transform 0.3s ease, box-shadow 0.3s ease;}
 .eacard:hover{transform:translateY(-4px) scale(1.02); box-shadow: inset 0px 35px 25px #fff8, inset -10px 0px 20px #0002, 0 0 26px rgba(138,79,255,0.45), 0 0 55px rgba(255,77,109,0.35);}
-.earpod-lid{position:absolute; top:0; left:50%; transform:translateX(-50%); width:270px; height:105px; background:linear-gradient(180deg,#FF69B4 70%,#e0e0e0 100%); border-radius:135px 135px 70px 70px/110px 110px 40px 40px; box-shadow:0 8px 24px rgba(0,0,0,0.15), inset 0 2px 6px rgba(255,255,255,0.6); transform-origin:bottom center; transition: transform 0.8s cubic-bezier(.7,-0.5,.3,1.5);}
+.earpod-lid{position:absolute; top:0; left:50%; transform:translateX(-50%); width:270px; height:105px; background:linear-gradient(180deg,#ff4d6d 70%,#e0e0e0 100%); border-radius:135px 135px 70px 70px/110px 110px 40px 40px; box-shadow:0 8px 24px rgba(0,0,0,0.15), inset 0 2px 6px rgba(255,255,255,0.6); transform-origin:bottom center; transition: transform 0.8s cubic-bezier(.7,-0.5,.3,1.5);}
 .earpod-lid.open{transform:rotateX(70deg) scaleY(0.8);}
 .earpod-content{position:absolute; left:50%; top:0; transform:translate(-50%,-180px) scale(0.7); width:140px; opacity:0; transition: opacity 0.5s 0.3s, transform 0.7s cubic-bezier(.7,-0.5,.3,1.5);}
 .earpod-content.open{opacity:1; transform:translate(-50%,-220px) scale(1.08);}
@@ -73,7 +73,7 @@ html, body {
   position: relative;
   z-index: 2000;
   text-align: center;
-  margin-bottom: 2px; /* 1–2px gap from card */
+  margin-bottom: 1px; /* 1–2px gap from card */
 }
 
 @media(max-width:600px){
@@ -95,8 +95,8 @@ html, body {
 <main class="container" id="top">
   <!-- Music Button sits just above card -->
   <div id="musicPlayer">
-    <button id="musicToggle" class="btn">▶️</button>
-    <span id="musicStatus" style="font-size:15px; color:black; font-weight:600;">Press Play</span>
+    <button id="musicToggle">▶️</button>
+    <span id="musicStatus" style="font-size:15px; color:black; font-weight:600;">❤️</span>
     <audio id="birthdayMusic" src="assets/music.m4a" loop></audio>
   </div>
 
@@ -119,8 +119,8 @@ html, body {
 <!-- Gallery Modal -->
 <div class="modal" id="galleryModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); justify-content:center; align-items:center;">
   <div class="gallery-section">
-    <button class="close-btn" id="closeGalleryBtn">✖</button>
-    <h2 id="smileyHeading" style="margin:10px 0 20px;font-size:28px;color:var(--accent-2)">Tap the <span style="color: #FF69B4;">Pink</span> lid</h2>
+    <button class="close-btn" id="closeGalleryBtn"></button>
+    <h2 id="smileyHeading" style="margin:10px 0 20px;font-size:28px;color:var(--accent-2)">Tap the <span style="color: #ff4d6d;">Pink</span> lid</h2>
     <div class="eacard" id="earpodCase">
       <div class="earpod-lid" id="earpodLid"></div>
       <div class="earpod-content" id="earpodContent">
@@ -230,7 +230,7 @@ openSurpriseBtn.addEventListener('click', () => {
 });
 
 // Close gallery modal
-closeGalleryBtn.addEventListener('click', () => {
+closeLoveBtn.addEventListener('click', () => {
   galleryModal.style.display = 'none';
   openSurpriseBtn.textContent = '🎁 Click for your surprise';
 });
