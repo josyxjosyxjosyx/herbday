@@ -95,8 +95,8 @@ html, body {
 <main class="container" id="top">
   <!-- Music Button sits just above card -->
   <div id="musicPlayer">
-    <button id="musicToggle">▶️</button>
-    <span id="musicStatus" style="font-size:15px; color:black; font-weight:600;">❤️</span>
+    <button id="musicToggle" class="btn">▶️❤️</button>
+    <span id="musicStatus" style="font-size:15px; color:black; font-weight:600;"></span>
     <audio id="birthdayMusic" src="assets/music.m4a" loop></audio>
   </div>
 
@@ -271,20 +271,20 @@ document.body.addEventListener('click', () => {
   if (music.paused) {
     music.play();
     isPlaying = true;
-    musicToggle.textContent = '⏸';
-    musicStatus.textContent = 'Playing...🎵';
+    musicToggle.textContent = '⏸ Playing...🎵';
+    musicStatus.textContent = '';
   }
 }, { once: true });
 
 musicToggle.addEventListener('click', () => {
   if (isPlaying) {
     music.pause();
-    musicToggle.textContent = '▶️';
-    musicStatus.textContent = 'Paused...';
+    musicToggle.textContent = '▶️ Paused...';
+    musicStatus.textContent = '';
   } else {
     music.play();
-    musicToggle.textContent = '⏸';
-    musicStatus.textContent = 'Playing...🎵';
+    musicToggle.textContent = '⏸ Playing...🎵';
+    musicStatus.textContent = '';
   }
   isPlaying = !isPlaying;
 });
