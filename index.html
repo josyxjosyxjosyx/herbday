@@ -49,7 +49,7 @@ html, body {
 /* Gallery section */
 .gallery-section{margin-top:80px; max-width:900px; width:96%; background:transparent; border-radius:24px; padding:20px; box-shadow:0 16px 40px rgba(0,0,0,0.1); text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; position:relative;}
 
-/* Earpod (realistic) */
+/* Realistic AirPods case */
 .eacard {
   position: relative;
   width: 260px;
@@ -60,10 +60,8 @@ html, body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor:pointer;
 }
-.eacard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-}
+.eacard:hover { transform: translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,0.2); }
+
 .earpod-lid {
   position: absolute;
   top: 0;
@@ -88,35 +86,14 @@ html, body {
   opacity: 0;
   transition: opacity 0.5s 0.3s, transform 0.7s cubic-bezier(.7,-0.5,.3,1.5);
 }
-.earpod-content.open {
-  opacity: 1;
-  transform: translate(-50%, -210px) scale(1.05);
-}
-.earpod-content img {
-  width: 100%;
-  border-radius: 20px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  transition: transform 0.4s ease;
-}
-.earpod-content.open img:hover {
-  transform: scale(1.05) rotate(1deg);
-}
+.earpod-content.open { opacity: 1; transform: translate(-50%, -210px) scale(1.05); }
+.earpod-content img { width: 100%; border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.3); transition: transform 0.4s ease; }
+.earpod-content.open img:hover { transform: scale(1.05) rotate(1deg); }
 .earpod-text{text-align:center; margin-top:10px; font-size:18px; color:#00e5ff; font-weight:bold;}
 
 /* Sparkles */
-.sparkle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: sparkleAnim 1.2s forwards;
-}
-@keyframes sparkleAnim {
-  0%   { transform: scale(0.4) translateY(0); opacity: 1; }
-  70%  { transform: scale(1.2) translateY(-40px); opacity: 0.8; }
-  100% { transform: scale(0.5) translateY(-60px); opacity: 0; }
-}
+.sparkle { position: absolute; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; animation: sparkleAnim 1.2s forwards; }
+@keyframes sparkleAnim { 0%{transform:scale(0.4) translateY(0);opacity:1;}70%{transform:scale(1.2) translateY(-40px);opacity:0.8;}100%{transform:scale(0.5) translateY(-60px);opacity:0;} }
 
 /* Love Letter */
 .love-section{margin-top:80px; max-width:500px; width:100%; background:repeating-linear-gradient(to bottom,#fdf6e3 0px,#fdf6e3 28px,#e7e3d8 28px,#e7e3d8 30px), linear-gradient(white,white), #fdf6e3; border-radius:24px; padding:32px 24px; box-shadow:0 16px 40px rgba(0,0,0,0.10),0 2px 8px #fff8; text-align:center; border:2px solid rgba(255,77,109,0.25); animation:fadeInLetter 1s ease forwards;}
@@ -124,14 +101,9 @@ html, body {
 @keyframes fadeInLetter{from{opacity:0; transform:translateY(30px) scale(0.98);}to{opacity:1; transform:translateY(0) scale(1);}}
 
 /* Close buttons */
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 22px;
-  font-weight: bold;
-  color: red;
-  cursor: pointer;
-}
+.close-btn { background: none; border: none; font-size: 22px; font-weight: bold; color: red; cursor: pointer; }
+
+#musicPlayer { position: relative; z-index: 2000; text-align: center; margin-bottom: 16px; }
 
 @media(max-width:600px){
   .gallery-section,.card{width:80vw; padding:16px;}
@@ -149,6 +121,13 @@ html, body {
 
 <div class="matrix-hearts-bg" id="matrixHeartsBg"></div>
 
+<!-- Music Player -->
+<div id="musicPlayer">
+  <button id="musicToggle" class="btn">▶️ Play Music</button>
+  <span id="musicStatus" style="font-size:15px; color:black; font-weight:600;">Press Play</span>
+  <audio id="birthdayMusic" src="assets/music.m4a" loop></audio>
+</div>
+
 <main class="container" id="top">
   <section class="card">
     <div class="pill">🎂 29 August • It's Baby Girl's Birthday 🥳</div>
@@ -164,13 +143,6 @@ html, body {
       </div>
     </div>
   </section>
-
-  <!-- Music Player (under card, no scrolling) -->
-  <div id="musicPlayer" style="z-index:2000; text-align:center; margin-top:20px;">
-    <button id="musicToggle" class="btn" style="font-size:16px; padding:8px 18px; min-width:60px;">▶️</button>
-    <span id="musicStatus" style="font-size:15px; color:black; font-weight:600;">Press Play</span>
-    <audio id="birthdayMusic" src="assets/music.m4a" autoplay loop></audio>
-  </div>
 </main>
 
 <!-- Gallery Modal -->
@@ -204,42 +176,50 @@ const names = ['Smaller 😂','Smiley 🥰','My Love ❤️'];
 let nameIndex = 0;
 function animateNameChange(newText){
   nameSpan.classList.add('slide-out');
-  setTimeout(()=>{nameSpan.textContent=newText; nameSpan.classList.remove('slide-out'); nameSpan.classList.add('slide-in'); setTimeout(()=>nameSpan.classList.remove('slide-in'),450);},450);
+  setTimeout(()=>{
+    nameSpan.textContent=newText; 
+    nameSpan.classList.remove('slide-out'); 
+    nameSpan.classList.add('slide-in'); 
+    setTimeout(()=>nameSpan.classList.remove('slide-in'),450);
+  },450);
 }
-setInterval(()=>{if(document.activeElement!==nameSpan){animateNameChange(names[nameIndex]); nameIndex=(nameIndex+1)%names.length;}},2000);
+setInterval(()=>{
+  if(document.activeElement!==nameSpan){
+    animateNameChange(names[nameIndex]); 
+    nameIndex=(nameIndex+1)%names.length;
+  }
+},2000);
 
-// Earpod
+// Earpod + sparkles
 const earpodCase=document.getElementById('earpodCase');
 const earpodLid=document.getElementById('earpodLid');
 const earpodContent=document.getElementById('earpodContent');
 const smileyHeading=document.getElementById('smileyHeading');
 let earpodOpen=false;
 
-function createSparkles(container){
-  const colors = ['#ff4d6d','#ffb6c1','#ff7a8c','#8a4fff','#ffdd66','#00e5ff','#ff69b4'];
-  for(let i=0;i<12;i++){
-    const sparkle = document.createElement('div');
-    sparkle.className='sparkle';
-    sparkle.style.left = (120 + Math.random()*40-20) + 'px';
-    sparkle.style.top = (80 + Math.random()*20-10) + 'px';
-    sparkle.style.background = colors[Math.floor(Math.random()*colors.length)];
-    sparkle.style.animationDelay = (Math.random()*0.3)+'s';
-    container.appendChild(sparkle);
-    setTimeout(()=>sparkle.remove(),1200);
-  }
+function createSparkle(x,y){
+  const sparkle=document.createElement('div');
+  sparkle.className='sparkle';
+  sparkle.style.left=x+'px';
+  sparkle.style.top=y+'px';
+  sparkle.style.background=['#ff4d6d','#ff7a8c','#8a4fff','#ffb6c1','#e75480','#ff69b4','#c71585','#ff1493','#db7093','#ff8da1','#b266b2','#ff5e62','#ff9966'][Math.floor(Math.random()*13)];
+  earpodCase.appendChild(sparkle);
+  setTimeout(()=>sparkle.remove(),1200);
 }
 
 earpodCase.addEventListener('click',()=>{
   if(!earpodOpen){
-    earpodLid.classList.add('open');
-    earpodContent.classList.add('open');
-    smileyHeading.style.opacity='0';
-    createSparkles(earpodCase);
+    earpodLid.classList.add('open'); 
+    earpodContent.classList.add('open'); 
+    smileyHeading.style.opacity='0'; 
     earpodOpen=true;
-  } else{
-    earpodLid.classList.remove('open');
-    earpodContent.classList.remove('open');
-    smileyHeading.style.opacity='1';
+    for(let i=0;i<15;i++){
+      setTimeout(()=>createSparkle(Math.random()*260, 50+Math.random()*60), i*50);
+    }
+  } else {
+    earpodLid.classList.remove('open'); 
+    earpodContent.classList.remove('open'); 
+    smileyHeading.style.opacity='1'; 
     earpodOpen=false;
   }
 });
@@ -270,23 +250,40 @@ const closeGalleryBtn = document.getElementById('closeGalleryBtn');
 const loveBtn = document.getElementById('loveLetterBtn');
 const closeLoveBtn = document.getElementById('closeLoveBtn');
 const loveText = document.getElementById('loveText');
+const letterContent = `Happy Birthday to the brightest star in my universe! \nYou light up my world and make every moment magical. \n\nI love you beyond words, and today is just a reminder of how special you are.\n\nForever yours,\n❤ Your Love`;
 
-openSurpriseBtn.addEventListener('click',()=>{galleryModal.style.display='flex';});
-closeGalleryBtn.addEventListener('click',()=>{galleryModal.style.display='none';});
-loveBtn.addEventListener('click',()=>{loveModal.style.display='flex';});
-closeLoveBtn.addEventListener('click',()=>{loveModal.style.display='none';});
-loveText.textContent="Happy Birthday, my love! 💖\n\nYou brighten my world like nobody else. Every smile of yours makes my day. I am so grateful for you and everything we share. May your birthday be as wonderful and magical as you are. 🎂✨\n\nForever yours, 💕";
-
-
-// Music player
-const musicBtn=document.getElementById('musicToggle');
-const musicAudio=document.getElementById('birthdayMusic');
-const musicStatus=document.getElementById('musicStatus');
-musicBtn.addEventListener('click',()=>{
-  if(musicAudio.paused){musicAudio.play(); musicStatus.textContent='Playing🎵'; musicBtn.textContent='⏸️';}
-  else{musicAudio.pause(); musicStatus.textContent='Paused⏸️'; musicBtn.textContent='▶️';}
+openSurpriseBtn.addEventListener('click', () => { galleryModal.style.display = 'flex'; });
+closeGalleryBtn.addEventListener('click', () => { galleryModal.style.display = 'none'; });
+loveBtn.addEventListener('click', () => {
+  galleryModal.style.display = 'none';
+  loveModal.style.display = 'flex';
+  loveText.textContent = '';
+  typeWriter(letterContent);
+  loveBtn.disabled = true;
+  loveBtn.textContent = '💌 Revealed!';
 });
-</script>
+closeLoveBtn.addEventListener('click', () => { loveModal.style.display = 'none'; loveBtn.disabled = false; loveBtn.textContent = '💌 Reveal My Letter'; });
 
+function typeWriter(text, i = 0) {
+  if (i < text.length) {
+    loveText.textContent += text.charAt(i);
+    setTimeout(() => typeWriter(text, i + 1), 40);
+  }
+}
+
+// Music
+const music = document.getElementById('birthdayMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicStatusElem = document.getElementById('musicStatus');
+let isPlaying = false;
+musicToggle.addEventListener('click', ()=> {
+  if(isPlaying){ music.pause(); musicToggle.textContent='▶️ Play Music'; musicStatusElem.textContent='Paused'; }
+  else{ music.play(); musicToggle.textContent='⏸️ Pause Music'; musicStatusElem.textContent='Playing🎵'; }
+  isPlaying = !isPlaying;
+});
+
+// Autoplay on first user interaction
+document.body.addEventListener('click', ()=>{ if(!isPlaying){ music.play(); musicToggle.textContent='⏸️ Pause Music'; musicStatusElem.textContent='Playing🎵'; isPlaying=true; } }, {once:true});
+</script>
 </body>
 </html>
