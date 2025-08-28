@@ -103,7 +103,7 @@ html, body {
 /* Close buttons */
 .close-btn { background: none; border: none; font-size: 22px; font-weight: bold; color: red; cursor: pointer; }
 
-#musicPlayer { position: relative; z-index: 2000; text-align: center; margin-bottom: 16px; }
+#musicPlayer { position: relative; z-index: 2000; text-align: center; margin-bottom: 5px; }
 
 @media(max-width:600px){
   .gallery-section,.card{width:80vw; padding:16px;}
@@ -123,7 +123,7 @@ html, body {
 
 <!-- Music Player -->
 <div id="musicPlayer">
-  <button id="musicToggle" class="btn">▶️ Play Music</button>
+  <button id="musicToggle" class="btn">▶️</button>
   <span id="musicStatus" style="font-size:15px; color:black; font-weight:600;">Press Play</span>
   <audio id="birthdayMusic" src="assets/music.m4a" loop></audio>
 </div>
@@ -277,13 +277,13 @@ const musicToggle = document.getElementById('musicToggle');
 const musicStatusElem = document.getElementById('musicStatus');
 let isPlaying = false;
 musicToggle.addEventListener('click', ()=> {
-  if(isPlaying){ music.pause(); musicToggle.textContent='▶️ Play Music'; musicStatusElem.textContent='Paused'; }
-  else{ music.play(); musicToggle.textContent='⏸️ Pause Music'; musicStatusElem.textContent='Playing🎵'; }
+  if(isPlaying){ music.pause(); musicToggle.textContent='▶️'; musicStatusElem.textContent='Paused'; }
+  else{ music.play(); musicToggle.textContent='⏸️'; musicStatusElem.textContent='Playing🎵'; }
   isPlaying = !isPlaying;
 });
 
 // Autoplay on first user interaction
-document.body.addEventListener('click', ()=>{ if(!isPlaying){ music.play(); musicToggle.textContent='⏸️ Pause Music'; musicStatusElem.textContent='Playing🎵'; isPlaying=true; } }, {once:true});
+document.body.addEventListener('click', ()=>{ if(!isPlaying){ music.play(); musicToggle.textContent='⏸️'; musicStatusElem.textContent='Playing🎵'; isPlaying=true; } }, {once:true});
 </script>
 </body>
 </html>
