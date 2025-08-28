@@ -145,6 +145,7 @@ html, body {
 const nameSpan = document.getElementById('changingName');
 const names = ['Smaller 😂','Smiley 🥰','My Love ❤️']; 
 let nameIndex = 0;
+
 function animateNameChange(newText){
   nameSpan.classList.add('slide-out');
   setTimeout(()=>{
@@ -154,6 +155,7 @@ function animateNameChange(newText){
     setTimeout(()=>nameSpan.classList.remove('slide-in'),450);
   },450);
 }
+
 setInterval(()=>{
   if(document.activeElement!==nameSpan){
     animateNameChange(names[nameIndex]); 
@@ -162,18 +164,18 @@ setInterval(()=>{
 },2000);
 
 // Earpod + sparkles
-const earpodCase=document.getElementById('earpodCase');
-const earpodLid=document.getElementById('earpodLid');
-const earpodContent=document.getElementById('earpodContent');
-const smileyHeading=document.getElementById('smileyHeading');
-let earpodOpen=false;
+const earpodCase = document.getElementById('earpodCase');
+const earpodLid = document.getElementById('earpodLid');
+const earpodContent = document.getElementById('earpodContent');
+const smileyHeading = document.getElementById('smileyHeading');
+let earpodOpen = false;
 
 function createSparkle(x,y){
-  const sparkle=document.createElement('div');
-  sparkle.className='sparkle';
-  sparkle.style.left=x+'px';
-  sparkle.style.top=y+'px';
-  sparkle.style.background=['#ff4d6d','#ff7a8c','#8a4fff','#ffb6c1','#e75480','#ff69b4','#c71585','#ff1493','#db7093','#ff8da1','#b266b2','#ff5e62','#ff9966'][Math.floor(Math.random()*13)];
+  const sparkle = document.createElement('div');
+  sparkle.className = 'sparkle';
+  sparkle.style.left = x+'px';
+  sparkle.style.top = y+'px';
+  sparkle.style.background = ['#ff4d6d','#ff7a8c','#8a4fff','#ffb6c1','#e75480','#ff69b4','#c71585','#ff1493','#db7093','#ff8da1','#b266b2','#ff5e62','#ff9966'][Math.floor(Math.random()*13)];
   earpodCase.appendChild(sparkle);
   setTimeout(()=>sparkle.remove(),1200);
 }
@@ -182,36 +184,40 @@ earpodCase.addEventListener('click',()=>{
   if(!earpodOpen){
     earpodLid.classList.add('open'); 
     earpodContent.classList.add('open'); 
-    smileyHeading.style.opacity='0'; 
-    earpodOpen=true;
+    smileyHeading.style.opacity = '0'; 
+    earpodOpen = true;
     for(let i=0;i<15;i++){
       setTimeout(()=>createSparkle(Math.random()*260, 50+Math.random()*60), i*50);
     }
   } else {
     earpodLid.classList.remove('open'); 
     earpodContent.classList.remove('open'); 
-    smileyHeading.style.opacity='1'; 
-    earpodOpen=false;
+    smileyHeading.style.opacity = '1'; 
+    earpodOpen = false;
   }
 });
 
 // Matrix hearts
-function random(min,max){return Math.random()*(max-min)+min;}
+function random(min,max){ return Math.random()*(max-min)+min; }
 const heartEmojis=['❤️','💖','💗','💘','💕','💞','💝','💓','💜','💙','🧡','💚','💛'];
-const matrixBg=document.getElementById('matrixHeartsBg');
-const columns=Math.floor(window.innerWidth/32);
+const matrixBg = document.getElementById('matrixHeartsBg');
+const columns = Math.floor(window.innerWidth/32);
+
 function spawnHeart(colIdx){
-  const heart=document.createElement('div'); 
+  const heart = document.createElement('div'); 
   heart.className='matrix-heart';
-  heart.textContent=heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
-  heart.style.left=(colIdx*32)+'px';
-  heart.style.top='-40px';
-  heart.style.color=['#ff4d6d','#ff7a8c','#8a4fff','#ffb6c1','#e75480','#ff69b4','#c71585','#ff1493','#db7093','#ff8da1','#b266b2','#ff5e62','#ff9966'][Math.floor(Math.random()*13)];
-  heart.style.animationDuration=random(6,12)+'s';
+  heart.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+  heart.style.left = (colIdx*32)+'px';
+  heart.style.top = '-40px';
+  heart.style.color = ['#ff4d6d','#ff7a8c','#8a4fff','#ffb6c1','#e75480','#ff69b4','#c71585','#ff1493','#db7093','#ff8da1','#b266b2','#ff5e62','#ff9966'][Math.floor(Math.random()*13)];
+  heart.style.animationDuration = random(6,12)+'s';
   matrixBg.appendChild(heart);
   setTimeout(()=>matrixBg.removeChild(heart),12000);
 }
-for(let i=0;i<columns;i++){setInterval(()=>spawnHeart(i),random(1200,2200));}
+
+for(let i=0;i<columns;i++){
+  setInterval(()=>spawnHeart(i), random(1200,2200));
+}
 
 // Modal logic
 const galleryModal = document.getElementById('galleryModal');
@@ -230,7 +236,7 @@ openSurpriseBtn.addEventListener('click', () => {
 });
 
 // Close gallery modal
-closeLoveBtn.addEventListener('click', () => {
+closeGalleryBtn.addEventListener('click', () => {
   galleryModal.style.display = 'none';
   openSurpriseBtn.textContent = '🎁 Click for your surprise';
 });
@@ -245,11 +251,19 @@ loveBtn.addEventListener('click', () => {
   loveBtn.textContent = '💌 Revealed!';
 });
 
-// Close love modal and reset button
+// Close love modal and reset button + close earpod lid
 closeLoveBtn.addEventListener('click', () => {
   loveModal.style.display = 'none';
   loveBtn.disabled = false;
   loveBtn.textContent = '💌 Reveal The Last Surprise';
+
+  // Close earpod lid if it was open
+  if(earpodOpen){
+    earpodLid.classList.remove('open');
+    earpodContent.classList.remove('open');
+    smileyHeading.style.opacity = '1';
+    earpodOpen = false;
+  }
 });
 
 // Typewriter effect
